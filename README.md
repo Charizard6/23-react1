@@ -51,6 +51,8 @@ const  element = <div taIndex="0"></div>;
 const element = <img src={user.avatarUrl}></img>;
 ```
 
+교재 107p 실습까지 함.
+
 ---
 **# 🐣3주차 3월16일**
 
