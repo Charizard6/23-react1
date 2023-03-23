@@ -5,6 +5,52 @@
 
 기존 github레포 삭제, 로컬 삭제, 새 리액트 프로젝트 생성
 
+JSX 형식
+```
+const name = 'Josh Perez';
+const element = <h1>Hello, {name}</h1>;
+````
+내가 했던 코어태그를 떠올리자. 비슷한 점이 있다.
+
+Babel(일종의 컴파일러) 예시
+```
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+); 
+=
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+//createElement 사용하면 다음과 같은 JS객체가 생성된다.
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
+  }
+};
+```
+
+JSX의 역할 -교재 98p
+- 내부적으로 HTML/XML 코드를 JS로 변환
+- REACT가 createElement함수를 사용, 자동으로 JS로 변환
+- JS로 작업 시 reateElement 사용
+- 가독성을 높여 주는 역할 -> 98p(JSX 사용), 99p(JS 사용) 비교
+
+JSX 장점 : 코드 간결, 가독성, Injection Attack 방어
+
+JSX 사용법 : 104p 참고, 태그의 속성값 지정 시
+```
+//큰따옴표 사이에 문자열
+const  element = <div taIndex="0"></div>;
+//중괄호 사이에 JS코드를 삽입
+const element = <img src={user.avatarUrl}></img>;
+```
+
 ---
 **# 🐣3주차 3월16일**
 
