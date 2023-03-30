@@ -1,6 +1,74 @@
 **# 🎃201930314 육영현 3학년2반**
 ---
+**# 🐣5주차 3월30일**
 
+엘리먼트의 정의
+- 리액트 앱을 구성하는 요소, 가장 작은 빌딩 블록
+- 웹사이트의 경우 DOM 엘리먼트, HTML요소를 의미
+
+엘리먼트의 생김새
+- JS객체의 형태
+- 컴포넌트, 속성 및 내부의 모든 children을 포함하는 일반 JS객체
+- 마음대로 변경할 수 없는 불변성
+
+내부적으로 자바 스크립트 객체를 만드는 함수 createElement()
+- React.createElement(type, [props], [...children])
+- type : 태그가 들어감. 컴포넌트가 들가도 태그가 됨
+- props : element의 속성
+- children : 자식 element
+
+엘리먼트의 특징
+- 한 번 생성된 엘리먼트의 children이나 속성을 바꿀 수 없당.
+- 내용이 바뀌면 새 엘리먼트 생성, 이전 엘리먼트와 교체
+- 교체작업은 Virtual DOM을 사용
+
+***130p예제 cdn방식으로 dom 굴러가는거 확인. chapter04/test.html***
+
+***4챕터 실습 시 index.js에서 렌더링 방식이 책과 다르니 주석처리 해 둔것 참고하기***
+
+5장 진입 - 컴포넌트란
+- 컴포넌트 = JS함수, 입력과 출력이 있어 유사
+- 입력은 props, 출력은 react elemet의 형태
+- 엘리먼트를 필요한 만큼 만들어 사용 = 객체 지향과 유사
+
+props의 개념, 특징
+- 컴포넌트의 속성, 컴포넌트에 전달 할 정보를 담은 JS 객체
+- 읽기 전용 = 속성이 다른 엘리먼트를 생성하려면 새 객체를 만들어야함
+
+함수형 컴포넌트, 클래스 컴포넌트 두 종류인데 Hook이 나오고 함수형을 주로 쓰지만 클래스도 이해를 해두어야함.
+
+함수 컴포넌트
+```
+function Welcome(props){
+  return <h1>hi {props.name}</h1>;
+}
+```
+클래스 컴포넌트
+```
+class Welcom extends React.Component{
+  render() {
+    return <h1>hi {this.props.name}</h1>;
+    //상속 때문에 this로 자신임을 표시
+  }
+}
+```
+컴포넌트의 이름은 대문자로. 소문자로 시작하면 DOM태그로 인식.
+
+**154p 렌더링 요즘방식으로 바꿔보기**
+```
+function Welcom(props){
+  return <h1>hi, {props.name}</hi>;
+}
+const element = <Welcome name="yyh" />;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  element
+);
+```
+
+5장 실습까지 미리 함 컴포넌트 이름들이 비슷하니 주의
+
+---
 **# 🐣4주차 3월23일**
 
 기존 github레포 삭제, 로컬 삭제, 새 리액트 프로젝트 생성
