@@ -1,11 +1,32 @@
 **# 🎃201930314 육영현 3학년2반**
 ---
-**# 🐣5주차 3월30일**
+**# 🐣6주차 4월06일**
 
-책 5.5 및 실습은 5주차에 미리함
+5장 실습은 5주차에 미리함
+
+컴포넌트합성, 추출 5.5,5.6 최종 렌더링은 index.html
+
+6장 state
+- 리액트 컴포넌트의 상태
+- 상태 = 컴포넌트의 변경 가능한 데이터
+- State가 변하면 re-rendering, 관련된 값만 state에 포함
+
+state 특징 클래스형 컴포넌트와 같이 공부
+- JS의 객체
+- 클래스형 컴포넌트에서는 this.state 로 선언
+- 함수형 컴포넌트에서는 useState()
+- state 변경 = setState()
 
 
+생명주기
+- constructor가 실행 되면서 컴포넌트가 생성
+- 생성 직후 componentDidMount()함수 호출
+- 컴포넌트가 소멸하기 전까지 여러 번 렌더링
+- 렌더링은 props, setState(), forceUpdate() 에 의해 이루어짐.
+- 렌더링이 끝나면 componentDidUpdate() 함수 호출
+- 컴포넌트가 언마운트 되면 componentWillUnmount() 호출
 
+6장 실습 ReactDeveloperTools 사용까지
 
 **# 🐣5주차 3월30일**
 
@@ -160,7 +181,7 @@ SinglePageApplication을 쉽고 빠르게 맨들 수 있게 해줌<br><br>
 <br><br>
 ---
 
-**# 🐣2주차 3월9일**
+**# 🐣2주차 3월09일**
 1. Visual Studio Code의 확장 기능을 통해 소스를 commit.<br>
 2. VS code와 git hub간 연동 후 원격 리모트.<br>
 3. 로컬에 커밋된 소스를 push로 git hub에 업로드.<br>
