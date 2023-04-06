@@ -2,6 +2,13 @@
 ---
 **# 🐣5주차 3월30일**
 
+책 5.5 및 실습은 5주차에 미리함
+
+
+
+
+**# 🐣5주차 3월30일**
+
 엘리먼트의 정의
 - 리액트 앱을 구성하는 요소, 가장 작은 빌딩 블록
 - 웹사이트의 경우 DOM 엘리먼트, HTML요소를 의미
@@ -38,13 +45,13 @@ props의 개념, 특징
 함수형 컴포넌트, 클래스 컴포넌트 두 종류인데 Hook이 나오고 함수형을 주로 쓰지만 클래스도 이해를 해두어야함.
 
 함수 컴포넌트
-```
+```javascript
 function Welcome(props){
   return <h1>hi {props.name}</h1>;
 }
 ```
 클래스 컴포넌트
-```
+```javascript
 class Welcom extends React.Component{
   render() {
     return <h1>hi {this.props.name}</h1>;
@@ -55,7 +62,7 @@ class Welcom extends React.Component{
 컴포넌트의 이름은 대문자로. 소문자로 시작하면 DOM태그로 인식.
 
 **154p 렌더링 요즘방식으로 바꿔보기**
-```
+```javascript
 function Welcom(props){
   return <h1>hi, {props.name}</hi>;
 }
@@ -74,14 +81,15 @@ root.render(
 기존 github레포 삭제, 로컬 삭제, 새 리액트 프로젝트 생성
 
 JSX 형식
-```
+```javascript
 const name = 'Josh Perez';
 const element = <h1>Hello, {name}</h1>;
 ````
 내가 했던 코어태그를 떠올리자. 비슷한 점이 있다.
 
 Babel(일종의 컴파일러) 예시
-```
+
+```javascript
 const element = (
   <h1 className="greeting">
     Hello, world!
@@ -112,7 +120,7 @@ JSX의 역할 -교재 98p
 JSX 장점 : 코드 간결, 가독성, Injection Attack 방어
 
 JSX 사용법 : 104p 참고, 태그의 속성값 지정 시
-```
+```javascript
 //큰따옴표 사이에 문자열
 const  element = <div taIndex="0"></div>;
 //중괄호 사이에 JS코드를 삽입
