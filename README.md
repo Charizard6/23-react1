@@ -1,5 +1,115 @@
 **# 🎃201930314 육영현 3학년2반**
 ---
+
+**# 🐣7주차 4월13일**
+
+훅이란
+- 클래스형 컴포넌트에서는 생성자(constructor)에서 state를 정의하고, setState() 함수를 통해 state를 업데이트
+- 예전 사용하던 함수형 컴포넌트는 별도로 state를 정의, 생명주기에 맞춰 동작되도록 할 수 없었다.
+- 함수형 컴포넌트에서도 state나 생명주기 함수의 기능을 사용하게 함
+- state와 생명주기 기능에 갈고리를 걸어 원하는 시점에 정해진 함수를 실행되도록 만듬 함수
+- 훅의 이름은 use로 시작
+
+useState()
+- const[변수명, set함수명] = useState(초깃값);
+```javascript
+function Counter(props){
+  const [count, setCount] = useState(0);
+  return(
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(count+1)}>
+        클릭
+      </button>
+    </div>
+  )
+}
+```
+useEffect()
+- 사이드 이펙트를 수행
+- 렌더링 작업 중에는 작업이 완료될 수 없다
+- 클래스 컴포넌트의 생명주기 함수와 같은 기능을 하나로 통합한 기능을 제공
+- useEffect(이펙트함수, 의존성배열);
+```javascript
+//배열 없이 사용해서 dom이 변경된 이후에 해당 이펙트 함수를 실행
+function Counter(props){
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title =`총 ${count}번 클릭`;
+  })
+  return(
+    <div>
+      <p>{count}</p>
+      <button onClick={() => setCount(count+1)}>
+        클릭
+      </button>
+    </div>
+  )
+}
+```
+```javascript
+//componentwillUnMount()와 동일한 기능
+//useEffect에서 리턴하는 함수는 컴포넌트가 마운트 해제될 때 호출
+function Counter(props){
+  const [isOnline, setIsOnLine] = useState(null);
+  function handleStatusChange(status){
+    setIsOnLine(status.isOnline);
+  }
+  useEffect(() =>{
+    ServerAPI.subscribeUserStatus(props.user.id, handleStatusChange);
+    return () => {
+      ServerAPI.unsubscriberUsersStatus(props.user.id, handleStatusChange);
+    };
+  });
+  if(isOnline === null){
+    return '대기중';
+  }
+  return isOnline ? '온라인':'오프라인';
+}
+```
+결론
+```javascript
+useEffect(() => {
+  //컴포넌트가 마운트 된 이후,
+  1.의존성 배열에 있는 변수들 중 하나라도 값이 변경되었을 때 실행
+  2.의존성 배열에 빈 배열을 넣으면 마운트와 언마운트 시에 한번 씩 실행
+  3.의존성 배열 생략 시 컴포넌트 업데이트 시마다 실행
+
+  return () => {
+    //컴포넌트가 마운트 해제되기 전에 실행
+  }
+},[의존성 변수1, ...])
+```
+useMemo()
+- 이전 계산값을 갖고 있기 때문에 연산량이 많은 작업의 반복을 피함
+- 렌더링이 일어나는 동안 실행
+```javascript
+const memoizedValue = useMemo(() => {
+  //연산량이 높은 작업을 수행하여 결과를 반환
+  return computeExpensiveValue(의존변수,의존변수);
+},[의존변수, 의존변수]);
+```
+useCallback()
+- useMemo와의 차이점 값이 아닌 함수를 반환
+
+useRef()
+- 레퍼런스를 사용하기 위한 훅
+- 레퍼런스 = 특정 컴포넌트에 접근할 수 있는 객체
+- useRef()는 객체를 반환
+- const refContainer = useRef(초깃값);
+- 반환된 레퍼런스 객체는 생명주기 전체에 걸쳐 유지
+
+훅 규칙
+1. 초상의 레벨에서만 호출
+   1. 반복문이나 조건문 또는 중첩된 함수들 안에서 안됨
+   2. 컴포넌트가 렌더링 될 때마다 같은 순서로 호출
+   3. 224p는 잘못된 코드
+2. 리액트 함수형 컴포넌트에서만 훅을 호출
+
+커스텀 훅을 만들어야하는 상황 227p 예제 next에 적용해보기
+
+230p 예제 최종, 7장 마지막 요약 다시보기
+
 **# 🐣6주차 4월06일**
 
 ...5장 실습은 5주차에 미리함
