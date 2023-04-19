@@ -34,5 +34,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "**# 🎃201930314 육영현 3학년2반**\r ---",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
