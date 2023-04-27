@@ -1,6 +1,120 @@
 **# 🎃201930314 육영현 3학년2반**
 ---
 
+**# 🐣9주차 4월27일**
+
+React에서 클릭 이벤트 처리
+1. onclick => onClick 카멜케이스
+2. 전달하려는 함수는 문자열에서 함수 그대로 전달 "active()" => {active}
+3. 이벤트 처리함수 = 이벤트 핸들러 = 이벤트 리스너
+
+251p 두번째 예제 함수 안에 함수, 화살표 함수 사용하여 함수형 컴포넌트로 bind없이 구현
+
+arguments
+- 함수를 정의할 때는 parameter 혹은 매개변수
+- 함수를 사용할 때는 argument 혹은 인수
+```javascript
+<button onClick={(event) => this.deleteItem(id, event)}>삭제하기</button>
+<button onClick={this.deleteItem.bind(this, id)}>삭제하기</button>
+```
+- event 라는 매개변수는 리액트의 이벤트 객체
+- 두 방법 모두 1번 매개변수는 id, 2번 매개변수는 event
+- 1번은 명시적으로 event를 매개변수 지정, 2번은 id 이후 event가 자동전달(클래스형에서 사용)
+- 함수형 컴포넌트에서 이벤트 핸들러에 매개변수를 전달 => 254p
+```javascript
+function MyButton(props){
+  const handleDelete = (id, event) => {
+    console.log(id, event.target);
+  }
+  return(
+    <button onClick={(event) => handleDelete(1, event)}>삭제하기</button>
+  )
+}
+```
+**조건부 렌더링**
+
+엘리먼트 변수
+- 렌더링해야 될 컴포넌트를 변수처럼 사용하는 방법
+- 272p 코드처럼 state에 따라 button 변수에 컴포넌트의 객체를 저장, return문에서 사용
+```javascript
+//271p
+function LoginButton(props){
+  return(
+    <button onClick={props.onClick}>로그인</button>
+  )
+}
+//272p
+function LoginControl(props){
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLoginClick = () => {
+    setIsLoggedIn(true);
+  }
+  const handleLogoutClick = () => {
+    setIsLoggedIn(false);
+  }
+  let button;
+  if(isLoggendIn){
+    button = <LogoutButton onClick={handleLogoutClick} />;
+  } else {
+    button = <LoginButton onClick={handleLoginClick} />;
+  }
+  return (
+    <div>
+      <Greegint isLoggedIn={isLoggedIn} />
+      {button}
+    </div>
+  )
+}
+```
+인라인 조건
+```html
+true && ex -> true
+flase && ex -> false
+{unreadMessages.length > 0 &&
+  <h2>
+    현재 {unreadMessages.length}개의 읽지 않은 메세지가 있습니다.
+  </h2>
+}
+```
+인라인 ifelse 삼항연산자 사용
+```javascript
+function LoginControl(props){
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLoginClick = () => {
+    setIsLoggedIn(true);
+  }
+  const handleLogoutClick = () => {
+    setIsLoggedIn(false);
+  }
+  return (
+    <div>
+      <Greegint isLoggedIn={isLoggedIn} />
+      {isLoggedIn 
+        ? <LogoutButton onClick={handleLogoutClick}>
+        : <LoginBUtton onClick={handleLoginClick}>}
+    </div>
+  )
+}
+```
+컴포넌트를 렌더링하고 싶지 않을 때는 null을 리턴
+```javascript
+function MainPageprops(props){
+  const [showWarning, setShowWarning] = useState(false);
+  const handleToggleClick = () => {
+    setShowWarning(prevShowWarning => !prevShowWarning);
+  }
+  return (
+    <div>
+      <WarningBanner warning={showWarning} />
+      <button onClick={handleToggleClick}>
+        {showWarning ? '감추기' : '보이기'}
+      </button>
+    </div>
+  )
+}
+```
+9장까지 완료
+
 **# 🐣7주차 4월13일**
 
 훅이란
