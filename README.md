@@ -149,6 +149,9 @@ function NameForm(props){
   )
 }
 ```
+Null value 처음에는 값을 지정 후, 후에 null이 되면 입력 가능한 상태가 됨.
+
+11장 실습
 
 
 
