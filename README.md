@@ -1,6 +1,157 @@
 **# 🎃201930314 육영현 3학년2반**
 ---
 
+**# 🐣10주차 5월04일**
+
+리스트는 자바스크립트의 변수나 객체를 하나의 변수로 묶어 놓은 배열
+
+키는 각 객체나 아이템을 구분할 수 있는 고유한 값, 리스트에서 아이템을 구별하기 위한 고유한 문자열
+
+같은 컴포넌트를 화면에 반복적으로 나타내야 할 경우 배열에 들어있는 엘리먼트를 map() 함수를 이용하여 렌더링
+```javascript
+const doubled = numbers.map((number) => number * 2);
+```
+numbers 배열에 들어있는 요소를 map()을 이용하여 추출 후 2를 곱함
+```javascript
+const numbers = [1,2,3,4,5];
+const listItems = numbers.map((number) => 
+  <li>{number}</li>
+);
+```
+NumbersList 컴포넌트
+```javascript
+function NumberList(props){
+  const { numbers } = props;
+  const listItems = numbers.map((number) => 
+    <li>{number}</li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  )
+}
+const numbers = [1,2,3,4,5];
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <NumberList numbers={numbers} />
+  </React.StrictMode>
+)
+```
+키 props가 없어서 경고문구 나옴
+
+10장 실습 chapter_10
+
+이하 11장
+
+제어 컴포넌트 = 사용자가 입력한 값에 접근하고 제어할 수 있도록 해주는 컴포넌트
+
+HTML 폼을 리액트 제어 컴포넌트로 만든 것
+```javascript
+function NameForm(props){
+  const [value, setValue] = useState('');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  }
+  const handleSubmit = (event) => {
+    alert('입력한 이름' + value);
+    event.preventDefault(); //현재 페이지에 남겨짐
+  }
+  return(
+    <form onSubmit={handleSubmit}>
+      <label>
+        이름 : 
+        <input type="text" value={value} onChange={handleChange}/>
+      </label>
+      <button type="submit">제출</button>
+    </form>
+  )
+}
+```
+TextArea 리액트에서는 state를 통해 태그의 vlaue라는 attribute를 변경
+```javascript
+function NameForm(props){
+  const [value, setValue] = useState('요청사항을 입력하세요');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  }
+  const handleSubmit = (event) => {
+    alert('입력한 요청사항' + value);
+    event.preventDefault(); //현재 페이지에 남겨짐
+  }
+  return(
+    <form onSubmit={handleSubmit}>
+      <label>
+        요청사항 : 
+        <textarea value={value} onChange={handleChange}/>
+      </label>
+      <button type="submit">제출</button>
+    </form>
+  )
+}
+```
+select 태그
+```javascript
+function NameForm(props){
+  const [value, setValue] = useState('grape');
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  }
+  const handleSubmit = (event) => {
+    alert('입력한 과일' + value);
+    event.preventDefault(); //현재 페이지에 남겨짐
+  }
+  return(
+    <form onSubmit={handleSubmit}>
+      <label>
+        과일 선택 : 
+        <select value={value} onChange={handleChange}>
+          <option value="appele">사과</option>
+          <option value="banana">바나난</option>
+          <option value="grape">포도</option>
+        </select>
+      </label>
+      <button type="submit">제출</button>
+    </form>
+  )
+}
+```
+File input 태그는 그 값이 읽기 전용이기 때문에 리액트에서는 비제어 컴포넌트가 된다.
+
+하나의 컴포넌트에서 여러 개의 입력을 다루기
+```javascript
+function NameForm(props){
+  const [haveBreakFast, setHaveBreakfast] = useState(true);
+  const [numberOfGuest, setNumberOfGuest] = useState(2);
+
+  const handleSubmit = (event) => {
+    alert(`아침 식사 여부 : ${haveBreakfast}, 방문객 수 : ${numberOfGuest}`);
+    event.preventDefault(); //현재 페이지에 남겨짐
+  }
+  return(
+    <form onSubmit={handleSubmit}>
+      <label>
+        아침식사 여부 :
+        <input type="checkbox"
+          checked={haveBreakfast} onChange ={(event) => {
+            setHaveBreakfast(event.target.checked);
+          }} />
+      </label>
+      <br />
+      <label>
+        방문객 수 :
+        <input type="number" 
+        value={numberOfGuest} onChange={(event) => {
+          setNumberOfGuest(event.target.value);
+        }} />
+      </label>
+      <button type="submit">제출</button>
+    </form>
+  )
+}
+```
+
+
+
 **# 🐣9주차 4월27일**
 
 React에서 클릭 이벤트 처리
