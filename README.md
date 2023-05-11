@@ -11,7 +11,7 @@ shared State
 == 12장 실습에서 자세히 나옴. 코드 참고할 것
 - 섭씨를 입력하면 화씨 자동계산 반대도 됨
 - Calculator 내의 두개의 temperautrInput이 state를 공유하는 것을 확인
-
+- const [temperature, setTemperature] = useState("");
 
 
 
