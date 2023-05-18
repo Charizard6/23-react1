@@ -1,4 +1,229 @@
 # 🎃201930314 육영현 3학년2반
+## 🐣12주차 5월18일
+
+합성(Composition)은 컴포넌트를 합쳐 새로운 컴포넌트 생성
+- Containment 방법 
+  1. 특정 컴포넌트가 하위 컴포넌트를 포함하는 형태의 합성방법
+  2. 컴포넌트에 따라 어떤 자식 엘리먼트가 들어올 지 미리 예상할 수 없는 경우가 있다.
+  3. 이럴 때 컴포넌트에서 children prop을 사용하여 자식 엘리먼트를 출력에 그대로 전달하는 것이 좋다.
+  4. 이 때 children prop은 컴포넌트의 props에 기본적으로 들어있는 children 속성을 사용한다.
+  ```javascript
+  function FancyBorder(props){
+    return(
+      <div className={'FancyBorder FancyBorder-'+props.color}>
+        {props.children}
+      </div>
+    )
+  }
+  ```
+  5. props.children을 사용하면 해당 컴포넌트의 하위 컴포넌트가 모두 children으로 들어오게 된다.
+  ```javascript
+  //FancyBorder 컴포넌트를 사용하는 예제
+  function WelcomDialog(props){
+    return(
+      <FancyBorder color="blue">
+        <h1 className="Dialog-title">어서오세요</h1>
+        <p className="Dialog-message">방문하신것을환영</p>
+      </FancyBorder>
+    );
+  }
+  ```
+  6. 리액트에서는 props.children을 통해 하위 컴포넌트를 하나로 모아서 제공.
+  7. 여러개의 children 집합이 필요한 경우는 별도로 props를 정의해서 각 원하는 컴포넌트를 넣어준다.
+  ```javascript
+  function SpliPane(props) {
+    return (
+      <div className="SplitPane">
+        <div className="SplitPane-left">
+          {props.left}
+        </div>
+        <div className="SplitPane-right">
+          {props.right}
+        </div>
+      </div>
+    );
+  }
+  function App(props) {
+    return (
+      <SplitPane
+        left={
+          <Contacts />
+        }
+        right={
+          <Chat />
+        }
+      />
+    );
+  }
+  ```
+- Specialization 방법
+  1. WelcomDialog는 Dialog의 특별한 케이스이다.
+  2. 범용적 개념을 구별이 되게 구체화 하는 방법
+  3. 객체지향에서는 상속을 사용하여 특수화를 구현, 리액트에서는 합성을 사용
+  ```javascript
+  function Dialog(props){
+    return (
+      <FancyBorder color="blue">
+        <h1 className="Dialog-title">{props.title}</h1>
+        <p className="Dialog-message">{props.message}</p>
+      </FancyBorder>
+    );
+  }
+  function WelcomDialog(props){
+    return(
+      <Dialog title="어서오세요" message="방문한것을 환영" />
+    )
+  }
+  ```
+- Containment와 Specialization을 같이 사용
+  1. Containment를 위해서 props.children을 사용, Specialization을 위해 직접 정의한 props를 사용하면 된다.
+  ```javascript
+  function Dialog(props){
+    return (
+      <FancyBorder color="blue">
+        <h1 className="Dialog-title">
+          {props.title}
+        </h1>
+        <p className="Dialog-message">
+          {props.message}
+        </p>
+        {props.children}
+      </FancyBorder>
+    );
+  }
+  function SignUpDialog(props){
+    const [nickname, setNickname] = useState('');
+    const handleChange = (event) => {
+      setNickname(event.target.value);
+    }
+    const handleSignUp = () => {
+      alert(`어서오세${nickname}`);
+    }
+    
+    //Dialog 내의 input button이 props.children으로 전달됨
+    return (
+      <Dialog 
+        title="타이틀"
+        message="이름입력"
+        <input 
+          value = {nickname}
+          onChange={handleChange}
+        />
+        <button onClick={handleSignUp}>
+          가입하기
+        </button>
+      />
+    )
+  }
+  ```
+  2. Dialog컴포넌트는 이전의 것과 비슷하나 Containment를 위해 끝부분에 props.children을 추가
+  3. Dialog를 사용하는 SignUpDialog는 Specialization을 위해 props인 title, message에 값을 넣어주고 있고, 입력을 받기 위해 <input value="인풋태그">와 <button>버튼</button> 태그가 있다.
+  4. 두 개의 태그 모두 props.children으로 전달 되어 다이얼로그에 표시 된다.
+13장 실습 p369
+
+14장 컨텍스트란
+- 기존의 일반적인 리액트에서는 데이터가 컴포넌트의 props를 통해 부모에게 자식으로 단방향으로 전달되었다.
+- 컨텍스트는 리액트 컴포넌트들 사이에서 데이터를 기존의 props를 통해 전달하는 방식 대신 '컴포넌트 트리를 통해 곧바로 컴포넌트에 전달하는 새로운 방식'을 제공
+- 이를 통해 어떤 컴포넌트라도 쉽게 데이터에 접근할 수 있다.
+
+**그래서 언제 쓰는데**
+- p382 예제처럼 props를 통해 데이터를 전달하는 방식은 실제 데이터를 필요로 하는 컴포넌트까지의 깊이가 깊어질 수록 복잡해진다.
+- 또한 반복적인 코드를 계속해서 작성해 주어야 하기 때문에 비효율적이고 가독성은 떨어진다
+- p383 아래의 예제는 컨텍스트를 사용한 예
+```javascript
+//컨텍스트는 데이터를 매번 컴포넌트를 통해 전달할 필요 없이 컴포넌트 트리로 곧바로 전달하게 해준다.
+//여기서는 현재 테마를 위한 컨텍스트를 생성하며, 기본값을 'light'
+const ThemeContext = React.createContext('light');
+
+//Provider를 사용하여 하위 컴포넌트들에게 현재 테마 데이터를 전달한다.
+//모든 하위 컴포넌트들은 컴포넌트 트리 하단에 얼마나 깊이 있는지에 관계없이 데이터를 읽을 수 있다.
+//여기선 현재 테마값으로 'dark'를 전달
+function App(props) {
+  return (
+    <ThemeContext.Provider value="dark">
+      <Toolbar />
+    </ThemeContext.Provider>
+  )
+}
+
+//이제 중간에 위치한 컴포넌트는 테마 데이터를 하위 컴포넌트로 전달할 필요가 없다
+function Toolbar(props) {
+  return (
+    <div>
+      <ThemeButton />
+    </div>
+  )
+}
+
+function ThemeButton(props) {
+  //리액트는 가장 가까운 상위테마 Provider를 찾아서 해당되는 값을 사용.
+  // 만약 해당되는 Provider가 없을 경우 기본값(여기서는 light)을 사용
+  // 여기서는 상위 Provider가 있어 현재 테마 값은 dark가 된다
+  return (
+    <ThemeContext.Consumer>
+      {value => <Button theme = {value} />}
+    </ThemeContext.Consumer>
+  )
+}
+```
+컨텍스트를 사용하기 전 고려할 점
+- 컨텍스트는 다른 레벨의 많은 컴포넌트가 특정 데이터를 필요로 하는 경우 주로 사용한다.
+- 컨포넌트와 컨텍스트가 연동되면 재사용성이 떨어짐
+- 다른 레벨의 많은 컴포넌트가 데이터를 필요로 하는 경우가 아니면 props를 통해 데이터를 전달하는 컴포넌트 합성 방법이 더 적합하다.
+```javascript
+//page는 pagelayout을 pagelayout은 navigationBar를 렌더링
+<Page user={user} avatarSize={avatarSize} />
+<PageLayout user={user} avatarSize={avatarSize} />
+<NavigationBar user={user} avatarSize={avatarSize} />
+
+//link컴포넌트는 avatar 컴포넌트를 렌더링
+<Link href={user.permalink}>
+  <Avatar user={user} size={avatarSize}>
+</Link>
+```
+- p386 예제는 중간 레벨의 컴포넌트를 통해 전달해야 하는 props를 없애고, 코드를 더욱 간결하게 만들어 준다.
+- 또한 최상위 컴포넌트에 좀 더 많은 권한을 부여
+- 다만 데이터가 많아질수록 상위 컴포넌트에 몰리기 때문에 상위 컴포넌트는 점점 복잡해지고, 하위 컴포넌트는 너무 유연해진다. p387 예제 최종
+```javascript
+function Page(props) {
+  const user = props.user;
+  const topBar = (
+    <NavigationBar>
+      <Link href={user.permalink}>
+        <Avatar user={user} size={props.avatarSize}>
+      </Link>
+    </NavigationBar>
+  );
+
+  const content = <Feed user={user} />;
+  return (
+    <PageLayout
+      topBar={topBar}
+      content={content}
+    />
+  )
+}
+```
+컨텍스트 API
+- React.createContext
+  1. 컨텍스트를 생성하기 위한 함수
+  2. 파라미터에는 기본값을 넣어주면 된다.
+  3. 하위 컴포넌트는 가장 가까운 상위베렐의 Provider로 부터 컨텍스트를 받게 되지만, Provider를 찾을 수 없다면 위에서 설정한 기본값을 사용
+- Contxt.Provider
+  1. 하위 컴포넌트들을 감싸주면 모든 하위 컴포넌트들이 해당 컨텍스트의 데이터에 접근할 수 있게 된다.
+  2. Provier 에는 value라는 props이 있고 하위 컴포넌트에 전달된다.
+  3. 하위 컴포넌트를 consumer 컴포넌트라고 부른다.
+- Class.contextType
+  1. Provider 하위에 있는 클래스 컴포넌트에서 컨텍스트의 데이터에 접근하기 위해 사용
+- Context.Consumer
+  1. 함수형 컴포넌트에서 사용하여 컨텍스트를 구독할 수 있다.
+  2. 컴포넌트의 자식으로 함수가 올 수 잇는데 이것을 function as a child라고 함.
+  3. Context.Consumer로 감싸면 자식으로 들어간 함수가 현재 컨텍스트의 value를 받아 리액트 노드로 리턴
+  4. 함수로 전달되는 value는 Provider의 value prop 과 동일
+- Context.displayName
+  1. 컨텍스트 객체는 displayNAme이라는 문자열 속성을 갖는다.
+  2. 크롬의 리액트 개발자 도구에서는 컨텍스트의Provider나 Consumer를 표시할 때 displayName을 함께 표시한다.
+
 
 ## 🐣11주차 5월11일
 
