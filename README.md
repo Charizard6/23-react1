@@ -1,4 +1,40 @@
 # 🎃201930314 육영현 3학년2반
+
+## 🐣13주차 5월25일
+
+14장 여러 개의 컨텍스트 사용
+- Context.Provider를 중첩해서 사용
+- p393 예제는 테마 컨텍스트와 로그인유저 컨텍스트 두 개를 다룸(실습에도 나옴)
+- Provider를 중첩으로 해서 Consumer도 중첩으로 사용
+- 두 개 또는 그 이상의 컨텍스트의 값이 자주 함께 사용될 경우 모든 값을 한 번에 제공하는 별도의 render prop컴포넌트를 직접 만드는 것을 고려
+
+useContext
+- 함수형 컴포넌트에서 컨텍스트를 사용하기 위함
+- useContext() or React.createContext() 함수 호출로 생성된 컨텍스트 객체를 인자로 받아 현재 컨텍스트의 값을 리턴
+```javascript
+function MyCom(props) {
+  const value = useContext(MyContext);
+  return (
+    ...
+  )
+}
+```
+- 이 방법도 가장 가까운 상위 Provider로부터 컨텍스트의 값을 받아옴
+- 만일 값이 변경되면 useContext() 훅을 사용하는 컴포넌트가 재 렌더링 된다.
+- 파라미터로 컨텍스트 객체를 넣어야함
+```javascript
+//옳은 예시
+useContext(MyContext);
+//틀린 예시
+useContext(MyContext.Consumer);
+```
+14장 실습
+
+15장 입장
+
+css 기초
+
+
 ## 🐣12주차 5월18일
 
 합성(Composition)은 컴포넌트를 합쳐 새로운 컴포넌트 생성
